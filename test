@@ -1,0 +1,16 @@
+const request = require('supertest');
+const app = require('./app');
+
+describe('API Tests', () => {
+    test('GET /api/add returns correct sum', async () => {
+        const response = await request(app).get('/api/add?a=3&b=4');
+        expect(response.status).toBe(200);
+        expect(response.body).toEqual({ sum: 7 });
+    });
+
+    test('GET /api/add handles invalid inputs', async () => {
+        const response = await request(app).get('/api/add?a=foo&b=bar');
+        expect(response.status).toBe(200);
+        expect(response.body).toEqual({ sum: NaN });
+    });
+});
